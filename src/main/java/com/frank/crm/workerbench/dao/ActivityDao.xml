@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命名空间，不同的mapper映射，使用不同的命名空间-->
+<!--namespace.sqlId-->
+<mapper namespace="com.frank.crm.workerbench.dao.ActivityDao">
+    <insert id="save" parameterType="Activity">
+        insert into tbl_activity (
+        id,
+        owner,
+        name,
+        startDate,
+        endDate,
+        cost,
+        description,
+        createTime,
+        createBy
+        ) values (
+        #{id},
+        #{owner},
+        #{name},
+        #{startDate},
+        #{endDate},
+        #{cost},
+        #{description},
+        #{createTime},
+        #{createBy}
+        );
+    </insert>
+    <select id="QueryActivityListByCondition" resultType="Activity">
+        select
+        a.id,
+        u.name as owner,
+        a.name,
+        a.startDate,
+        a.endDate
+        from tbl_activity a
+        join tbl_user u
+        on a.owner = u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and a.startDate &gt; #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.endDate &lt; #{endDate}
+            </if>
+        </where>
+        order by a.createTime desc
+        Limit #{pageNum},#{pageSize}
+    </select>
+    <select id="getCount" resultType="int">
+        select
+        count(*)
+        from tbl_activity a
+        join tbl_user u
+        on a.owner = u.id
+        <where>
+            <if test="name!=null and name!=''">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and a.startDate &lt; #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.endDate &gt; #{endDate}
+            </if>
+        </where>
+    </select>
+    <delete id="deleteByIds">
+        delete from tbl_activity where id in
+        <foreach collection="array" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+    <select id="getActById" resultType="Activity">
+        select * from tbl_activity where id = #{id}
+    </select>
+    <update id="update" parameterType="Activity">
+        update tbl_activity set
+        owner = #{owner},
+        name=#{name},
+        startDate=#{startDate},
+        endDate=#{endDate},
+        cost=#{cost},
+        description=#{description},
+        editTime=#{editTime},
+        editBy=#{editBy}
+        where id=#{id} ;
+    </update>
+    <select id="detail" resultType="Activity">
+        select
+        a.id,
+        u.name as owner,
+        a.name,
+        a.startDate,
+        a.endDate,
+        a.cost,
+        a.description,
+        a.createTime,
+        a.createBy,
+        a.editTime,
+        a.editBy
+        from tbl_activity a
+        join tbl_user u
+        on a.owner = u.id
+        where a.id = #{id}
+    </select>
+</mapper>
