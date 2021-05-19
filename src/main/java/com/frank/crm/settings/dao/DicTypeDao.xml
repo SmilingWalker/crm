@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace 命名空间，不同的mapper映射，使用不同的命名空间-->
+<!--namespace.sqlId-->
+<mapper namespace="com.frank.crm.settings.dao.DicTypeDao">
+    <select id="selectAllCode" resultType="String">
+        select code from tbl_dic_type
+    </select>
+
+</mapper>

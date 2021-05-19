@@ -23,6 +23,9 @@
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
 
+  <listener>
+    <listener-class>com.frank.crm.web.listener.DictionaryListener</listener-class>
+  </listener>
   <servlet>
     <servlet-name>UserController</servlet-name>
     <servlet-class>com.frank.crm.settings.web.controller.UserController</servlet-class>
@@ -50,5 +53,37 @@
     <url-pattern>/workbench/activity/deleteRemarkById.do</url-pattern>
     <url-pattern>/workbench/activity/saveRemark.do</url-pattern>
     <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
+
+  </servlet-mapping>
+<!-- 线索控制器-->
+  <servlet>
+    <servlet-name>ClueController</servlet-name>
+    <servlet-class>com.frank.crm.workerbench.web.controller.ClueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/getUserList.do</url-pattern>
+    <url-pattern>/workbench/clue/save.do</url-pattern>
+    <url-pattern>/workbench/clue/detail.do</url-pattern>
+    <url-pattern>/workbench/clue/refreshActList.do</url-pattern>
+    <url-pattern>/workbench/clue/unbind.do</url-pattern>
+    <url-pattern>/workbench/clue/queryCandidateAct.do</url-pattern>
+    <url-pattern>/workbench/clue/bind.do</url-pattern>
+    <url-pattern>/workbench/clue/getActByClueId.do</url-pattern>
+    <url-pattern>/workbench/clue/convert.do</url-pattern>
+  </servlet-mapping>
+
+  <!-- 交易控制器-->
+  <servlet>
+    <servlet-name>TransactionController</servlet-name>
+    <servlet-class>com.frank.crm.workerbench.web.controller.TransactionController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TransactionController</servlet-name>
+    <url-pattern>/workbench/transaction/add.do</url-pattern>
+    <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/transaction/save.do</url-pattern>
+    <url-pattern>/workbench/transaction/detail.do</url-pattern>
+    <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
   </servlet-mapping>
 </web-app>

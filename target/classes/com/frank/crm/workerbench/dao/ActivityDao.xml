@@ -115,4 +115,47 @@
         on a.owner = u.id
         where a.id = #{id}
     </select>
+
+    <select id="getActByClueId" resultType="Activity">
+        select
+        car.id as id,
+        a.name,
+        u.name as owner,
+        a.startDate,
+        a.endDate
+        from tbl_activity a join
+        tbl_user u on a.owner = u.id
+        join tbl_clue_activity_relation car on
+        a.id=car.activityId
+        where car.clueId=#{id}
+
+
+    </select>
+    <select id="getCandidateActList" resultType="Activity">
+        select
+        a.id,
+        u.name as owner,
+        a.startDate,
+        a.endDate,
+        a.name
+        from tbl_activity a join
+        tbl_user u on a.owner=u.id
+        where a.id not in (select act.id from tbl_activity act
+         join tbl_clue_activity_relation car on act.id=car.activityId where car.clueId=#{clueId}
+         )
+         and a.name like '%' #{name} '%'
+    </select>
+    <select id="getCandidateActById" resultType="Activity">
+        select
+        a.id,
+        u.name as owner,
+        a.name,
+        a.startDate,
+        a.endDate
+        from tbl_activity a
+        join tbl_user u
+        on a.owner = u.id
+        join tbl_clue_activity_relation car on a.id=car.activityId
+        where car.clueId=#{clueId} and a.name like '%' #{name} '%'
+    </select>
 </mapper>
